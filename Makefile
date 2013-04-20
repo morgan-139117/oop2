@@ -8,4 +8,5 @@ Painting.o:  Painting.cpp  Painting.h string.h
 	g++ -c Painting.cpp 
 string.o: string.cpp string.h
 	g++ -c string.cpp
-
+clean:
+	m-f $(TARGETS)
