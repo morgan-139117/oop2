@@ -8,7 +8,7 @@ ostream& operator<<(ostream& os,const String& f){
 
 istream& operator >>(istream & IS,String& str)
 {
-    char* input = new char[100];
+   /* char* input = new char[100];
     IS.getline(input,100);
     
     int i = 0;
@@ -22,7 +22,18 @@ istream& operator >>(istream & IS,String& str)
     }
     str.string[i] = '\0';
     delete[]input;
+    return IS;*/
+
+    char* input = new char[1000];
+    IS.getline(input,1000);
+
+    str.string = new char[strlen(input)+1];
+    memcpy(str.string,input,strlen(input)+1);
+
+
+    delete[] input;
     return IS;
+
 }
 /*
 istream& operator>>(istream& is, String& f){

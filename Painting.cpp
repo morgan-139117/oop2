@@ -1,21 +1,31 @@
 #include "Painting.h"
-int Painting:: same_title = 0;
 
-bool Painting:: have_same_title(String f){
-       cout<<"zzzzzzzzzzzzzz"<<f;
- cout<<"zzzzzzzzzzzzzz"<<title;
-      if (title==f){
+bool Painting::same_artist(String _fname, String _lname){
+     if (  fname == _fname && lname == _lname ){
+      
       return true;
 
 }else{
 
-  cout<<"zzzzzzzzzzzzzz"<<f;
-  
-  
      return false;
 };
 
 }
+
+bool Painting:: dup_painting(String _title, String _fname, String _lname){
+
+      if ( title == _title && fname == _fname && lname == _lname ){
+      
+      return true;
+
+}else{
+
+     return false;
+};
+
+}
+
+
 
 bool Painting:: operator==(const Painting & obj){
       
@@ -52,13 +62,13 @@ void Painting::deep_copy_(const Painting & src){
       fname=src.fname;
       lname=src.lname;
       char tmp[10];
-      char ccopy[]=" copy ";
-      Painting::incre_title_number();
-      sprintf(tmp,"%d",Painting::title_number());
+      char ccopy[]=" version2";
+      //Painting::incre_title_number();
+      //sprintf(tmp,"%d",Painting::title_number());
       String scopy=String(ccopy);
-      String stmp=String(tmp);
+    //  String stmp=String(tmp);
       title=src.title + scopy;
-      title=title+stmp;
+      title=title;
       lname=src.lname;
       h=src.h;
       w=src.w;

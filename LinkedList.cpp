@@ -1,64 +1,79 @@
 #include <stdio.h>
 #include <iostream>
 #include <string.h>
-#include "Painting.h"
+#include "LinkedList.h"
 
-template <class T>
-class LinkedList {
-    
-private:   
-    template <class U>
-    class LinkedNode
-    {
-    private:
-      U data;
-      LinkedNode<U> *pre;
-      LinkedNode<U> *next;
-    public:
+bool PLinkedList::have_artist( String _fname, String _lname){
 
-      friend class LinkedList;
-    //  LinkedNode<U>(obj):data(obj),pre(NULL),next(NULL){cout<<"called1";};
-      LinkedNode<U>(){pre=NULL;next=NULL;};
-     ~LinkedNode<U>(){};
+  if (head == NULL)
+    return false;
+  else
+    if(head->data.same_artist(_fname,_lname))
+      return true;
 
-      /* data */
-    };
+  return false;
+}
 
-public:
-    LinkedNode<T> *head;
-    LinkedNode<T> *tail;
-    int size;
-    LinkedList<T>(void){tail = head = NULL;size = 0;};
-    ~LinkedList<T>(void){};
-    void push_back(T node);
-    T search_node(T node);
-    int pop_back();
+bool PLinkedList::search_node(String _title, String _fname, String _lname){
+  
+PNode *temp_p = NULL;
 
-    T list();
-    T front();
-    void print();
-    void traverse();
+ if(head==NULL)
+    return false;
 
-    int remove_node(String obj);
-    int get_size() { return size;};
-    int delete_all();
+ if(head->data.dup_painting(_title,_fname,_lname))
+     
+    return true;
 
-    bool deleteNode(String obj);
+else
+  temp_p = head;
+   while(NULL != temp_p){
+
+     if(temp_p->data.dup_painting(_title,_fname,_lname))
+        return true;
+
+        temp_p = temp_p->next;
+   }
+
+  return false;
+};
+
+
+bool PLinkedList::_copy_node(String _title, String _fname, String _lname){
+  
+PNode *temp_p = NULL;
+
+
+
+  temp_p = head;
+   while(NULL != temp_p){
+
+     if(temp_p->data.dup_painting(_title,_fname,_lname))
+        break;
+
+        temp_p = temp_p->next;
+   }
+
+   Painting p;
+    p.deep_copy_(temp_p->data);
+PLinkedList::push_back(p);
+   
+  return temp_p;
 };
 
 
 
-template <typename T>
-void LinkedList<T>::push_back(T node){
+void PLinkedList::push_back(Painting &node){
 
    if ( 0 == size){
 
-      LinkedNode<T> *temp = new LinkedNode<T>(); 
+      PNode *temp = new PNode(); 
         temp->data = node;
     head = tail = temp;
     size++;
+
    }else{
-      LinkedNode<T> *temp = new LinkedNode<T>(); 
+      PNode *temp = new PNode(); 
        temp->data = node;
         tail->next = temp;
     temp->pre = tail;
@@ -69,119 +84,97 @@ void LinkedList<T>::push_back(T node){
 };
 
 
-template <typename T> 
-bool LinkedList<T>::deleteNode(String obj)
+void PLinkedList::print()
 {
- 
- return false;
-}
-/*
-template <typename T>
-int LinkedList<T>::remove_node(String obj)
-{
-	if ( size == 0){
-		
-		return -1;
-}
-	else if( size == 1)
-	{
-
-		LinkedNode<T>* temp = head;
-	
-		T rtn = temp->data;
-    cout<<"here";
-		if(true==rtn.have_same_title(obj)){
-        head = tail = NULL;
-		delete temp;
-
-		size--;}
-		else
-		return -2;
-	}
-	else
-	{
-		LinkedNode<T>* temp = head;
-        LinkedNode<T>* tempnext = head-next;
-
-	
-do{
-
-		T rtn = temp->data;
-
-	
-		if(true==rtn.have_same_title(obj)){
-		delete temp;
-    cout<<"asdfj;lksafdj;lasdf"<<size;
-		size--;
-    cout<<"asdfj;lksafdj;lasdf"<<size;
-
-  }
-
-   temp=temp->next;
-
-}while(temp!=null);
-		return 0;
-	}
-};
-
-*/
-template <class T>
-void LinkedList<T>::print( )
-{
-    LinkedNode<T> *tmp;
+    PNode *tmp;
      tmp=head;
+if( size != 0)
+ 
  do {
       cout << tmp->data;
 
       tmp = tmp->next;
 
     }  while (NULL!=tmp);
-    delete head;
-cout<<"size"<<size<<endl;
+   
+//cout<<"size"<<size<<endl;
 };
 
-template <typename T>
-T LinkedList<T>::search_node(T t){
 
-  return NULL;
-};
 
-template <typename T>
-int LinkedList<T>::delete_all()
+bool PLinkedList::deleteNode(String _title, String _fname, String _lname)
 {
-    cout<<"size"<<size<<endl;  
-    do{ 
-cout<<"size"<<size<<endl;
-           LinkedList<T>::pop_back();
-    }while(size!=1);
+  PNode *curr = head, *prev = NULL;
+
+  while (curr)
+  {
+     if(curr->data.dup_painting(_title,_fname,_lname)) break;
+
+    prev = curr;
+    curr = curr->next;
+  }
+
+  if (curr)
+    {
+      if (prev)
+        {
+          prev->next = curr->next;
+        }
+      else
+        {
+          head = curr->next;
+        }
+      delete(curr);
+      --size;
+      return true;
+    }
+  else
+    {
+      return false;
+    }
 }
 
 
-template <typename T>
-int LinkedList<T>::pop_back()
+bool PLinkedList::delete_all_node(PNode * obj)
+{
+     if ( NULL == obj)
+        return false;
+
+     PNode * tp_node;
+      tp_node = obj->next;
+     delete (obj);
+     size--;
+      PLinkedList::delete_all_node (tp_node);
+   
+     return true;
+}
+
+/*
+
+int PLinkedList::pop_back()
 {
   cout<<"asize"<<size<<endl;
   if ( size == 0)
     return -1;
   else if( size == 1)
   {cout<<"vsize"<<size<<endl;
-    LinkedNode<T>* temp = tail;
+    PNode* temp = tail;
     head = tail = NULL;
-    T rtn = temp->data;
+    PNode rtn = temp->data;
     delete temp;
     size--;
     return -3;
   }
   else
   {cout<<"csize"<<size<<endl;
-    LinkedNode<T>* temp = tail;
+    PNode* temp = tail;
     tail = tail->pre;
     tail->next = NULL;
-    T rtn = temp->data;
+    PNode rtn = temp->data;
     delete temp;
     size--;
     return size;
   }
 
   return 9;
-}
+}*/
