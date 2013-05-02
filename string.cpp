@@ -64,7 +64,10 @@ String::String(const char* tmp){
 }
 
 String::String(const String& tmp){
-	if(!tmp.string){
+	
+
+	
+	if(!tmp.string ){
 		string= 0 ;
 	}else{
 
@@ -79,7 +82,7 @@ String& String::operator=(const String& src){
 		if(string)
 				delete[] string;
 			if(!src.string) 
-				string= 0 ;
+				string = 0 ;
 			else 
 				string = new char[strlen(src.string)+1];
 			    strcpy(string,src.string);

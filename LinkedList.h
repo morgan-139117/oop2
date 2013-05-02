@@ -2,20 +2,26 @@
 #include <iostream>
 #include <string.h>
 #include "Painting.h"
+#include "Portrait.h"
+#include "Landscape.h"
+#include "Still.h"
 
+#ifndef LINKEDLIST_H_
+#define LINKEDLIST_H_
+using namespace std;
 class PLinkedList {
 private:   
 
     class PNode
     {
     private:
-      Painting data;
+      Painting *data;
       PNode *pre;
       PNode *next;
     public:
-
+      Painting * getData(){return data;};
       friend class PLinkedList;
-      PNode(){pre=NULL;next=NULL;};
+      PNode(){data=NULL;pre=NULL;next=NULL;};
      ~PNode(){};
 
       /* data */
@@ -26,9 +32,10 @@ public:
     PNode *head;
     PNode *tail;
     int size;
+    Painting * getData(){return head->getData();};
     PLinkedList(void){tail = head = NULL;size = 0;};
     ~PLinkedList(void){};
-    void push_back(Painting &node);
+    void push_back(Painting *node);//!!
   
     bool search_node(String _title, String _fname, String _lname);
     bool _copy_node(String _title, String _fname, String _lname);
@@ -36,7 +43,10 @@ public:
     int get_size() { return size;};
     bool delete_all_node(PNode * obj);
     bool deleteNode(String _title, String _fname, String _lname);
+    bool deleteNode(int _id);
+
     bool have_artist(String _fname, String _lname);
+    bool have_artist(ulong _id);
 };
 
 
@@ -152,3 +162,4 @@ int PLinkedList::pop_back()
 
   return 9;
 }*/
+#endif /* LINKEDLIST_H_ */

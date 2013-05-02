@@ -1,5 +1,20 @@
 #include "Painting.h"
 
+
+
+
+
+int Painting::timeval_to_msec(struct timeval *t) {
+	return t->tv_sec*1000+t->tv_usec/1000;
+}
+
+int Painting::current_msec() {
+	struct timeval t;
+	gettimeofday(&t,0);
+	return timeval_to_msec(&t);
+}
+
+
 bool Painting::same_artist(String _fname, String _lname){
      if (  fname == _fname && lname == _lname ){
       
@@ -11,6 +26,21 @@ bool Painting::same_artist(String _fname, String _lname){
 };
 
 }
+
+
+bool Painting:: dup_painting(ulong _id){
+
+      if ( id == _id ){
+
+      return true;
+
+}else{
+
+     return false;
+};
+
+}
+
 
 bool Painting:: dup_painting(String _title, String _fname, String _lname){
 
@@ -45,9 +75,8 @@ Painting::Painting(const Painting & src){
    
       fname=src.fname;
       lname=src.lname;
-     
+      id = src.id;
       title=src.title;
-
       lname=src.lname;
       h=src.h;
       w=src.w;
@@ -57,7 +86,7 @@ Painting::Painting(const Painting & src){
 
 void Painting::deep_copy_(const Painting & src){
 
-    if(NULL!=&src){
+    if(&src){
    
       fname=src.fname;
       lname=src.lname;
@@ -68,7 +97,7 @@ void Painting::deep_copy_(const Painting & src){
       String scopy=String(ccopy);
     //  String stmp=String(tmp);
       title=src.title + scopy;
-      title=title;
+     // title=title;
       lname=src.lname;
       h=src.h;
       w=src.w;

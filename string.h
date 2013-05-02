@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <iostream>
 #include <string.h>
+
+#ifndef STRING_H_
+#define STRING_H_
 using namespace std;
 class String{
    
@@ -9,6 +12,7 @@ class String{
 	public: 
 
     //constructor
+
 		String(){string=NULL;};
 		~String(){ delete[] string;};
 		String(const char* tmp);
@@ -23,3 +27,5 @@ class String{
         friend istream& operator>>(istream& is, String &f);
 };
 
+
+#endif /* STRING_H_ */
